@@ -2,6 +2,7 @@
 
 // load modules
 const express = require('express');
+const cors = require('cors')
 const morgan = require('morgan');
 const sequelize = require('./models').sequelize;
 
@@ -17,6 +18,7 @@ const app = express();
 app.use(express.json());
 // setup morgan which gives us http request logging
 app.use(morgan('dev'));
+app.use(cors())
 
 ////////////////////////////////////////
 // testing connection to the database///
