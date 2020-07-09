@@ -102,6 +102,4 @@ export default class CourseDetail extends Component{
 
     }
 
-
-
 }
