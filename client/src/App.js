@@ -38,8 +38,8 @@ export default class App extends Component {
 
                     <Switch>
                         <Route exact path='/' render={ () => <Redirect to='/courses'/>} />
-                        <Route path='/courses' component={CoursesWithContext} />
-                        <Route path='/courses/:id' component={CourseDetailWithContext} />
+                        <Route exact path='/courses' component={CoursesWithContext} />
+                        <Route exact path='/courses/:id' component={CourseDetailWithContext} />
                         <Route path='/signin' component={UserSignInWithContext} />
                         <Route path='/signup' component={UserSignUpWithContext} />
                         <Route path='/signout' component={UserSignOutWithContext} />

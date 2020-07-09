@@ -19,10 +19,10 @@ export default class CourseDetail extends Component{
                 if(course) {
                     this.setState({
                         course,
-                        author: course.user,
+                        author: course.User,
                         authUser: context.authenticatedUser
                     })
-                    console.log(this.state.courses)
+                    console.log(this.state.author)
                 }
 
             }).catch(err => {
@@ -41,13 +41,15 @@ export default class CourseDetail extends Component{
             authUser
         } = this.state;
 
+        console.log(author)
+
         return(
             <div>
                 <div className="actions--bar">
                     <div className="bounds">
                         <div className="grid-100">
 
-                            { this.Buttons() }
+                            {/*{ this.Buttons() }*/}
 
                             <Link className="button button-secondary" to="/">Return to List</Link>
                         </div>
@@ -58,7 +60,7 @@ export default class CourseDetail extends Component{
                         <div className="course--header">
                             <h4 className="course--label">Course</h4>
                             <h3 className="course--title">{`${this.state.course.title}`}</h3>
-                            <p>`By ${this.state.course.author.firstName} ${this.state.course.author.lastName}`</p>
+                            {/*<p>By {author.firstName} + {author.lastName}</p>*/}
                         </div>
                         <div className="course--description">
                             <ReactMarkdown>{this.state.course.description}</ReactMarkdown>
@@ -85,21 +87,21 @@ export default class CourseDetail extends Component{
         )
     }
 
-    Buttons = () =>{
-        const courseId = this.props.match.params.id;
-        const {authUser, author} = this.state;
-
-            if(authUser){
-                if(authUser.id === author.id){
-                    return (
-                        <span>
-                            <Link className="button" to={`/courses/${courseId}/update`}>Update Course</Link>
-                            <Link className="button" >Delete Course</Link>
-                        </span>
-                    )
-                }
-            }
-
-    }
+    // Buttons = () =>{
+    //     const courseId = this.props.match.params.id;
+    //     const {authUser, author} = this.state;
+    //
+    //         if(authUser){
+    //             if(authUser.id === author.id){
+    //                 return (
+    //                     <span>
+    //                         <Link className="button" to={`/courses/${courseId}/update`}>Update Course</Link>
+    //                         <Link className="button" >Delete Course</Link>
+    //                     </span>
+    //                 )
+    //             }
+    //         }
+    //
+    // }
 
 }
