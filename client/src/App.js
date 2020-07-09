@@ -2,7 +2,7 @@ import React from 'react';
 import './global.css';
 const axios = require('axios').default;
 let finalData;
-{ axios.get('http://localhost:5000/api/courses').then(r => finalData=r.data)}
+axios.get('http://localhost:5000/api/courses').then(r => console.log(r.data))
 
 
 
