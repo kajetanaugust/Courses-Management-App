@@ -103,26 +103,39 @@ router.get('/courses', asyncHandler(async(req, res) => {
 
 
 
-// GET route for getting individual courses
-router.get('/courses/:id', asyncHandler(async (req, res) => {
-    try{
-        const chosenCourse = await Course.findByPk(req.params.id);
-        if(chosenCourse){
-            res.json({ // filtering response attributes
-                id: chosenCourse.id,
-                title: chosenCourse.title,
-                description: chosenCourse.description,
-                estimatedTime: chosenCourse.estimatedTime,
-                materialsNeeded: chosenCourse.materialsNeeded,
-                userId: chosenCourse.userId
-            });
-        } else {
-            res.sendStatus(404)
-        }
-    }catch(error) {
-        res.json({message: error.message}).status(404)
-    }
-}))
+// GET api/courses/:id shows one chosen course, status 200
+
+router.get('/courses/:id', asyncHandler(async(req,res,next)=>{
+
+    const course = await Course.findByPk(req.params.id, {
+
+        attributes: ['id', 'title', 'description', 'estimatedTime', 'materialsNeeded', 'userId'],
+
+        include: [{
+
+            attributes: ['id', 'firstName', 'lastName', 'emailAddress'],
+
+            model: User,
+
+        }],
+
+    }); //finds course by given id
+
+    //console.log(req.params.id);
+
+
+
+
+    course
+
+        ?res.status(200).json(course) //shows chosen course
+
+        : res.status(404).json({message: 'Course Not found'}) //shows error message when course doesn't exist
+
+
+
+
+}));
 
 
 

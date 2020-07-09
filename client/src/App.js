@@ -15,6 +15,7 @@ import NotFound from './components/NotFound';
 import UserSignIn from './components/UserSignIn';
 import UserSignUp from './components/UserSignUp';
 import UserSignOut from './components/UserSignOut';
+import CreateCourse from './components/CreateCourse';
 
 
 import withContext from './Context';
@@ -24,6 +25,7 @@ const UserSignUpWithContext = withContext(UserSignUp);
 const UserSignOutWithContext = withContext(UserSignOut);
 const CourseDetailWithContext = withContext(CourseDetail);
 const CoursesWithContext = withContext(Courses);
+const CreateCourseWithContext = withContext(CreateCourse);
 
 export default class App extends Component {
 
@@ -40,11 +42,13 @@ export default class App extends Component {
                         <Route exact path='/' render={ () => <Redirect to='/courses'/>} />
                         <Route exact path='/courses' component={CoursesWithContext} />
                         <Route exact path='/courses/:id' component={CourseDetailWithContext} />
+                        <Route exact path='/courses/create' component={CreateCourseWithContext} />
                         <Route path='/signin' component={UserSignInWithContext} />
                         <Route path='/signup' component={UserSignUpWithContext} />
                         <Route path='/signout' component={UserSignOutWithContext} />
 
-                        <Route component={NotFound} />
+
+                        <Route path="*" component={NotFound} />
                     </Switch>
 
 
