@@ -4,6 +4,29 @@ import ReactMarkdown from 'react-markdown';
 
 export default class CourseDetail extends Component{
 
+    state = {
+        course: '',
+    };
+
+    componentDidMount() {
+
+        const { context } = this.props;
+
+        context.data.getCourse(this.props.match.params.id)
+            .then(course => {
+                if(course) {
+                    this.setState({course})
+                    console.log(this.state.courses)
+                }
+
+            }).catch(err => {
+            console.log(err)
+            this.props.history.push('/error');
+        })
+
+    }
+
+
     render() {
         return(
             <div>

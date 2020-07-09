@@ -14,12 +14,16 @@ import Header from './components/Header';
 import NotFound from './components/NotFound';
 import UserSignIn from './components/UserSignIn';
 import UserSignUp from './components/UserSignUp';
+import UserSignOut from './components/UserSignOut';
 
 
 import withContext from './Context';
 
 const UserSignInWithContext = withContext(UserSignIn);
 const UserSignUpWithContext = withContext(UserSignUp);
+const UserSignOutWithContext = withContext(UserSignOut);
+const CourseDetailWithContext = withContext(CourseDetail);
+const CoursesWithContext = withContext(Courses);
 
 export default class App extends Component {
 
@@ -34,10 +38,11 @@ export default class App extends Component {
 
                     <Switch>
                         <Route exact path='/' render={ () => <Redirect to='/courses'/>} />
-                        <Route path='/courses' component={Courses} />
-                        <Route path='/courses/:id' component={CourseDetail} />
+                        <Route path='/courses' component={CoursesWithContext} />
+                        <Route path='/courses/:id' component={CourseDetailWithContext} />
                         <Route path='/signin' component={UserSignInWithContext} />
                         <Route path='/signup' component={UserSignUpWithContext} />
+                        <Route path='/signout' component={UserSignOutWithContext} />
 
                         <Route component={NotFound} />
                     </Switch>

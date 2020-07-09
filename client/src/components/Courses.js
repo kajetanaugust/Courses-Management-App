@@ -3,16 +3,46 @@ import {Link} from 'react-router-dom';
 
 
 export default class Courses extends Component{
-    render() {
 
-        return(
-            <div className="bounds">
-                <div className="grid-33">
-                    <Link className="course--module course--link" to="/courses/:id">
-                    <h4 className="course--label">Course</h4>
-                    <h3 className="course--title">Build a Basic Bookcase</h3>
+    state = {
+        courses: [],
+    };
+
+
+    componentDidMount() {
+
+            const { context } = this.props;
+
+            context.data.getCourses()
+                .then(courses => {
+                    if(courses) {
+                        this.setState({courses})
+                        console.log(this.state.courses)
+                    }
+
+                }).catch(err => {
+                    console.log(err)
+                    this.props.history.push('/error');
+            })
+
+        }
+
+
+    render() {
+        const allCourses = this.state.courses.map(course =>
+                <div className="grid-33" key={course.id}>
+                    <Link className="course--module course--link" to={`/courses/${course.id}`}>
+                        <h4 className="course--label">Course</h4>
+                        <h3 className="course--title">{`${course.title}`}</h3>
                     </Link>
                 </div>
+            )
+
+        return(
+
+            <div className="bounds">
+
+                {allCourses}
 
                 <div className="grid-33">
                     <Link className="course--module course--add--module" to="/courses/create">
