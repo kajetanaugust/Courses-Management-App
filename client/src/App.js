@@ -1,19 +1,43 @@
-import React from 'react';
-import './global.css';
-const axios = require('axios').default;
-let finalData;
-axios.get('http://localhost:5000/api/courses').then(r => console.log(r.data))
+import React, {Component} from 'react';
+import './App.css';
+import {
+    BrowserRouter as Router,
+    Route,
+    Switch,
+    Redirect
+} from 'react-router-dom';
 
 
+import Courses from './components/Courses';
+import CourseDetail from './components/CourseDetail';
+import Header from './components/Header';
+import NotFound from './components/NotFound';
+import UserSignIn from './components/UserSignIn';
 
-function App() {
+export default class App extends Component {
+
+    render() {
+        return (
+            <Router>
+                <div id="root">
+
+                    <Header />
+
+                    <hr/>
+
+                    <Switch>
+                        <Route exact path='/' render={ () => <Redirect to='/courses'/>} />
+                        <Route path='/courses' component={Courses} />
+                        <Route path='/courses/:id' component={CourseDetail} />
+                        <Route path='/signin' component={UserSignIn} />
+
+                        <Route component={NotFound} />
+                    </Switch>
 
 
-    return (
-        <div className="App">
-            <p>{finalData}</p>
-        </div>
-    );
-}
+                </div>
+            </Router>
+        )
+    }
 
-export default App;
+};
