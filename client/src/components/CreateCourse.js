@@ -6,7 +6,29 @@ export default class CreateCourse extends Component{
 
     state= {
         errors:[],
+        userId:'',
+        lastName:'',
+        firstName:'',
+        title:'',
+        description:'',
+        estimatedTime: '',
+        materialsNeeded: '',
+        emailAddress:'',
+        password:'',
+    }
 
+
+    componentDidMount() {
+        const { context } = this.props;
+
+        this.setState( () => {
+            return {
+                userId: context.authenticatedUser.id,
+                lastName: context.authenticatedUser.lastName,
+                firstName: context.authenticatedUser.firstName,
+            }
+            }
+        )
     }
 
     render() {
@@ -33,7 +55,7 @@ export default class CreateCourse extends Component{
                         cancel={this.cancel}
                         errors={errors}
                         submit={this.submit}
-                        submitButtonText="Sign Up"
+                        submitButtonText="Create Course"
                         elements={() => (
                             <React.Fragment>
                                 <div className="grid-66">
@@ -45,10 +67,11 @@ export default class CreateCourse extends Component{
                                                 name="title"
                                                 type="text"
                                                 className="input-title course--title--input"
+                                                onChange={this.change}
                                                 placeholder="Course title..."
                                             />
                                         </div>
-                                        <p>By Joe Smith</p>
+                                        <p>By {this.state.firstName} {this.state.lastName}</p>
                                     </div>
                                     <div className="course--description">
                                         <div>
@@ -56,6 +79,7 @@ export default class CreateCourse extends Component{
                                                 id="description"
                                                 name="description"
                                                 className=""
+                                                onChange={this.change}
                                                 placeholder="Course description...">
                                             </textarea>
                                         </div>
@@ -72,6 +96,7 @@ export default class CreateCourse extends Component{
                                                         name="estimatedTime"
                                                         type="text"
                                                         className="course--time--input"
+                                                        onChange={this.change}
                                                         placeholder="Hours"
                                                     /></div>
                                             </li>
@@ -81,6 +106,7 @@ export default class CreateCourse extends Component{
                                                     <textarea
                                                         id="materialsNeeded"
                                                         name="materialsNeeded"
+                                                        onChange={this.change}
                                                         placeholder="List materials...">
                                                     </textarea>
                                                 </div>
@@ -101,6 +127,43 @@ export default class CreateCourse extends Component{
 
         )
     }
+
+    change = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+
+        this.setState(() => {
+            return {
+                [name]: value
+            };
+        });
+    }
+
+    submit = () => {
+        const { context } = this.props;
+        const authUser = context.authenticatedUser;
+        const emailAddress = authUser.emailAddress;
+        const password = authUser.password;
+        const { title , description, materialsNeeded, estimatedTime, userId, errors } = this.state;
+        // console.log(password)
+        const course = { title , description, materialsNeeded, estimatedTime, userId, errors };
+
+        context.data.createCourse(emailAddress, password, course)
+            .then(errors => {
+                if(errors.length) {
+                    this.setState({errors});
+                }else {
+                    console.log(`SUCCESS! Course is added!`);
+                    this.props.history.push('/');
+                }
+            }).catch( err => {
+            console.log(err);
+            this.props.history.push('/error');
+        })
+
+
+    }
+
     cancel = () => {
         this.props.history.push('/');
     }
