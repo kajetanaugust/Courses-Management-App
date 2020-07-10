@@ -103,4 +103,20 @@ export default class Data {
             throw new Error(); //else throw major error
         }
     }
+
+    async updateCourse(id, emailAddress, password, course){
+        const response = await this.api(`/courses/${id}`, 'PUT', course, true, { //post new course to API
+            emailAddress,
+            password
+        });
+        if (response.status === 204) { //if success
+            return [];
+        } else if (response.status === 400) { //else if 400 give errors from API
+            return response.json().then(data => {
+                return data.errors;
+            });
+        } else {
+            throw new Error(); //else throw major error
+        }
+    }
 }
