@@ -1,5 +1,8 @@
+// importing react
 import React, { Component } from 'react';
+// importing Link
 import { Link } from 'react-router-dom';
+// importing Form component
 import Form from './Form';
 
 export default class UserSignIn extends Component {
@@ -50,7 +53,7 @@ export default class UserSignIn extends Component {
         );
     }
     
-    
+    // change method
     change = (event) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -62,29 +65,31 @@ export default class UserSignIn extends Component {
         });
     }
 
+    //method for submitting user
     submit = () => {
         const { context } = this.props;
         const { from } = this.props.location.state || { from: { pathname: '/' } };
         const { emailAddress, password } = this.state;
 
         context.actions
-            .signIn(emailAddress, password)
+            .signIn(emailAddress, password) // calling signIn method
             .then( user => {
-                if (user === null) {
+                if (user === null) { // checking if user exists
                     this.setState(()=> {
-                        return {errors: [ 'Sign-in was unsuccessful! Check your credentials and try again' ]}
+                        return {errors: [ 'Sign-in was unsuccessful! Check your credentials and try again' ]} // showing error
                     })
                 } else {
-                    this.props.history.push(from);
-                    console.log(`SUCCESS! ${emailAddress} is now signed in!`)
+                    this.props.history.push(from); // redirecting to previous page
+                    console.log(`SUCCESS! ${emailAddress} is now signed in!`) // logging success to console
                 }
             }).catch( err => {
-            console.log(err);
-            // this.props.history.push('/error');
+            console.log(err); // logging error
+            this.props.history.push('/error'); // redirecting to error page
         })
     }
 
+    // cancel method
     cancel = () => {
-        this.props.history.push('/');
+        this.props.history.push('/'); // redirecting to main page
     }
 }

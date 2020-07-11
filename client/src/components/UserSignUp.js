@@ -77,6 +77,7 @@ export default class UserSignUp extends Component {
         );
     }
 
+    // change method
     change = (event) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -88,6 +89,7 @@ export default class UserSignUp extends Component {
         });
     }
 
+    //method for submitting new user
     submit = () => {
         const {context} = this.props;
 
@@ -99,8 +101,9 @@ export default class UserSignUp extends Component {
             confirmPassword
         } = this.state;
 
+        // checking if passwords match
         if (password === confirmPassword) {
-            const user = {
+            const user = { // if passwords match the user variable is created
                 firstName,
                 lastName,
                 emailAddress,
@@ -109,31 +112,32 @@ export default class UserSignUp extends Component {
 
 
             context.data
-                .createUser(user)
-                .then(errors => {
+                .createUser(user) // calling createUser method
+                .then(errors => { // checking for errors
                     if (errors.length) {
-                        this.setState({errors})
+                        this.setState({errors}) // setting errors state
                     } else {
-                        console.log(`${firstName} is successfully signed up and authenticated!`);
-                        context.actions.signIn(emailAddress, password)
+                        console.log(`${firstName} is successfully signed up and authenticated!`); // logging succes message
+                        context.actions.signIn(emailAddress, password) // passing password and email to signIn
                             .then(() => {
-                                this.props.history.push('/courses'); //redirect to main page
+                                this.props.history.push('/courses'); // redirecting to main page
                             });
                     }
                 }).catch(err => {
                     console.log(err);
-                    this.props.history.push('/error');
+                    this.props.history.push('/error'); // redirecting to error page
                 }
             )
         } else {
-            console.log('Passwords do not match!');
+            console.log('Passwords do not match!'); // logging password do not match message to console
             this.setState(() => {
-                return {errors: ['Passwords do not match!']};
+                return {errors: ['Passwords do not match!']}; // returning error
             });
         }
     }
 
+    // cancel method
     cancel = () => {
-        this.props.history.push('/')
+        this.props.history.push('/') // redirecting to main page
     }
 }
