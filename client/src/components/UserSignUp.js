@@ -7,6 +7,7 @@ export default class UserSignUp extends Component {
         name: '',
         emailAddress: '',
         password: '',
+        confirmPassword:'',
         errors: [],
     }
 

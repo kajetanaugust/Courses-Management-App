@@ -17,7 +17,7 @@ export default class Courses extends Component{
                 .then(courses => {
                     if(courses) {
                         this.setState({courses})
-                        console.log(this.state.courses)
+                        // console.log(this.state.courses)
                     }
 
                 }).catch(err => {

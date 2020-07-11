@@ -75,7 +75,7 @@ export default class Data {
         const response = await this.api(`/courses/${id}`, 'GET');
         if (response.status === 200) {
             const course = await response.json().then(data => data);
-            console.log(course);
+            // console.log(course);
             return course;
         }
         else if (response.status === 400) {

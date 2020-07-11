@@ -5,7 +5,7 @@ export default (props) => {
 
     const { context } = props;
     const authUser = context.authenticatedUser;
-    console.log(authUser);
+    // console.log(authUser);
 
     return(
         <div className="header">

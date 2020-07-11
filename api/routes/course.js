@@ -142,7 +142,7 @@ router.get('/courses/:id', asyncHandler(async(req,res,next)=>{
 // POST route for adding new course
 router.post('/courses',[
     check('title')// checking title
-        .exists({ checkNull: true})
+        .exists({ checkNull: true, checkFalsy:true })
         .withMessage('Please provide a "title"'),
     check('description')// checking description
         .exists({ checkNull: true, checkFalsy: true })
@@ -175,7 +175,7 @@ router.post('/courses',[
 // PUT route for updating course info
 router.put('/courses/:id',[
     check('title') // checking title
-        .exists({ checkNull: true})
+        .exists({ checkNull: true, checkFalsy: true })
         .withMessage('Please provide a "title"'),
     check('description') // checking description
         .exists({ checkNull: true, checkFalsy: true })
