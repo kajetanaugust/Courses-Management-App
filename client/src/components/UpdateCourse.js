@@ -14,11 +14,12 @@ export default class CreateCourse extends Component{
         errors:[],
     }
 
+    // getting selected course on componentDidMount
     componentDidMount() {
 
         const { context } = this.props;
 
-        context.data.getCourse(this.props.match.params.id)
+        context.data.getCourse(this.props.match.params.id) // getting course using getCourse
             .then(course => {
                 if(course) {
                     this.setState({
@@ -34,7 +35,7 @@ export default class CreateCourse extends Component{
 
             }).catch(err => {
             console.log(err)
-            this.props.history.push('/error');
+            this.props.history.push('/error'); // redirecting to error page
         })
 
     }

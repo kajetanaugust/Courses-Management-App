@@ -17,6 +17,7 @@ export default class CreateCourse extends Component{
     }
 
 
+    // getting authenticated user data on componentDidMount
     componentDidMount() {
         const { context } = this.props;
 
@@ -41,15 +42,6 @@ export default class CreateCourse extends Component{
             <div className="bounds course--detail">
                 <h1>Create Course</h1>
                 <div>
-                    {/*<div>*/}
-                    {/*    <h2 className="validation--errors--label">Validation errors</h2>*/}
-                    {/*    <div className="validation-errors">*/}
-                    {/*        <ul>*/}
-                    {/*            <li>Please provide a value for "Title"</li>*/}
-                    {/*            <li>Please provide a value for "Description"</li>*/}
-                    {/*        </ul>*/}
-                    {/*    </div>*/}
-                    {/*</div>*/}
                     <Form
                         cancel={this.cancel}
                         errors={errors}
@@ -113,12 +105,6 @@ export default class CreateCourse extends Component{
                                         </ul>
                                     </div>
                                 </div>
-                                {/*<div className="grid-100 pad-bottom">*/}
-                                {/*    <button className="button" type="submit">Create Course</button>*/}
-                                {/*    <button className="button button-secondary"*/}
-                                {/*            onClick="event.preventDefault(); location.href='index.html';">Cancel*/}
-                                {/*    </button>*/}
-                                {/*</div>*/}
                                 </React.Fragment>
                             )}/>
                 </div>
@@ -127,6 +113,7 @@ export default class CreateCourse extends Component{
         )
     }
 
+    // method handling changes in textfields and inputs
     change = (event) => {
         const name = event.target.name;
         const value = event.target.value;
@@ -138,6 +125,7 @@ export default class CreateCourse extends Component{
         });
     }
 
+    // method handling new course submission
     submit = () => {
         const { context } = this.props;
         const authUser = context.authenticatedUser;
@@ -145,24 +133,27 @@ export default class CreateCourse extends Component{
         const password = authUser.password;
         const { title , description, materialsNeeded, estimatedTime, userId, errors } = this.state;
         // console.log(password)
+
+        // creating course variable with data
         const course = { title , description, materialsNeeded, estimatedTime, userId, errors };
 
-        context.data.createCourse(emailAddress, password, course)
-            .then(errors => {
+        context.data.createCourse(emailAddress, password, course) // using createCourse method to create course
+            .then(errors => { // setting errors state if there are errors
                 if(errors.length) {
                     this.setState({errors});
                 }else {
-                    console.log(`SUCCESS! Course is added!`);
+                    console.log(`SUCCESS! Course is added!`); //logging succes message and redirecting to main route
                     this.props.history.push('/');
                 }
             }).catch( err => {
             console.log(err);
-            this.props.history.push('/error');
+            this.props.history.push('/error'); // redirecting to error page
         })
 
 
     }
 
+    // method handling cancel
     cancel = () => {
         this.props.history.push('/');
     }

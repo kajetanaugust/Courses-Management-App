@@ -88,12 +88,13 @@ export default class CourseDetail extends Component{
         )
     }
 
+    // adding buttons only for logged users
     buttons = () =>{
-        const courseId = this.props.match.params.id;
+        const courseId = this.props.match.params.id; // getting course id
         const {authUser, author} = this.state;
 
-            if(authUser){
-                if(authUser.id === author.id){
+            if(authUser){ // checking if there is authenticated user
+                if(authUser.id === author.id){ // checking if the user is the author of course
                     return (
                         <span>
                             <Link className="button" to={`/courses/${courseId}/update`}>Update Course</Link>
@@ -105,6 +106,7 @@ export default class CourseDetail extends Component{
 
     }
 
+    // handling course delete
     delete = () => {
         const { context } = this.props;
 
@@ -114,18 +116,17 @@ export default class CourseDetail extends Component{
         const courseId = this.props.match.params.id;
 
 
-        context.data.deleteCourse(courseId, emailAddress, password)
-            .then(errors => {
+        context.data.deleteCourse(courseId, emailAddress, password) // using deleteCourse method
+            .then(errors => { // checking for errors
                 if(errors.length) {
-                    this.setState({errors});
+                    this.setState({errors}); // setting errors state
                 }else {
-                    console.log(`SUCCESS! Course was successfully deleted!`);
-                    this.props.history.push(`/`);
+                    console.log(`SUCCESS! Course was successfully deleted!`); // success message
+                    this.props.history.push(`/`); // redirecting to main page
                 }
             }).catch( err => {
             console.log(err);
-            this.props.history.push('/error');
+            this.props.history.push('/error'); // redirecting to errors
         })
     }
-
 }
