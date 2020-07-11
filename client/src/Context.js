@@ -6,6 +6,7 @@ const Context = React.createContext();
 
 export class Provider extends Component {
 
+    // global state for authenticated user
     state = {
         authenticatedUser: Cookies.getJSON('authenticatedUser') || null
     };
@@ -36,27 +37,29 @@ export class Provider extends Component {
     }
 
 
+    // global function handling signing in
     signIn = async (emailAddress, password) => {
-        const user = await this.data.getUser(emailAddress, password);
-        if (user !== null) {
+        const user = await this.data.getUser(emailAddress, password); // getting user data
+        if (user !== null) { // checking if there is active user return
             user.password = password;
             this.setState(() => {
                 return {
-                    authenticatedUser: user,
+                    authenticatedUser: user, //setting authenticated user
                 };
             });
-            Cookies.set('authenticatedUser', JSON.stringify(user), { expires: 1 });
+            Cookies.set('authenticatedUser', JSON.stringify(user), { expires: 1 }); // adding user to the cookies
         }
         return user;
     }
 
+    // global function handling signing out
     signOut = () => {
         this.setState(() => {
             return {
-                authenticatedUser: null,
+                authenticatedUser: null, //removing authenticated user from state
             };
         });
-        Cookies.remove('authenticatedUser');
+        Cookies.remove('authenticatedUser'); // removing user from the cookies
     }
 }
 
