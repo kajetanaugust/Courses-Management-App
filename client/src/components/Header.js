@@ -13,14 +13,15 @@ export default (props) => {
                 <Link to='/'><h1 className="header--logo">Courses</h1></Link>
                 <nav>
 
-                    { authUser
-                        ?(
+
+                    { authUser // checking if there is authenticated user
+                        ?( // changing header to signout
                         <React.Fragment>
                             <span>Welcome, {authUser.firstName}!</span>
                             <Link className="signout" to="/signout">Sign Out</Link>
                         </React.Fragment>
                         )
-                        :(
+                        :( // changing header to signin
                         <React.Fragment>
                             <Link className="signup" to="/signup">Sign Up</Link>
                             <Link className="signin" to="/signin">Sign In</Link>

@@ -9,6 +9,7 @@ export default class Courses extends Component{
     };
 
 
+    // getting courses on componentDidMount
     componentDidMount() {
 
             const { context } = this.props;
@@ -29,6 +30,7 @@ export default class Courses extends Component{
 
 
     render() {
+        // iterating through all the courses and creating tiles
         const allCourses = this.state.courses.map(course =>
                 <div className='grid-33' key={course.id}>
                     <Link className="course--module course--link" to={`/courses/${course.id}`}>
