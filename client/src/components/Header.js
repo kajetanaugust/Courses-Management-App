@@ -17,7 +17,7 @@ export default (props) => {
                     { authUser // checking if there is authenticated user
                         ?( // changing header to signout
                         <React.Fragment>
-                            <span>Welcome, {authUser.firstName}!</span>
+                            <span>Welcome, {authUser.firstName} {authUser.lastName}!</span>
                             <Link className="signout" to="/signout">Sign Out</Link>
                         </React.Fragment>
                         )
